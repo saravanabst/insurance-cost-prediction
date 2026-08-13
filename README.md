@@ -218,7 +218,7 @@ Age showed one of the strongest positive relationships with PremiumPrice. Older 
 2. Number of Major Surgeries
 The number of major surgeries showed a positive relationship with PremiumPrice. Customers with a greater history of major surgeries tended to have higher estimated premiums in the dataset.
 
-3. Health Conditions
+3. Health Conditions showed varying relationships with insurance premiums.
 Health-related variables such as:
 Diabetes
 Blood pressure problems
@@ -227,12 +227,8 @@ Transplant history
 Known allergies
 Family history of cancer
 
-showed varying relationships with insurance premiums.
-
 4. BMI
-BMI was engineered from height and weight and included as a model feature.
-
-The analysis explored whether differences in BMI were associated with differences in estimated insurance premiums.
+BMI was engineered from height and weight and included as a model feature. The analysis explored whether differences in BMI were associated with differences in estimated insurance premiums.
 
 5. Age and Health Factors
 The analysis showed that insurance premium estimation is influenced by multiple factors rather than a single variable.
