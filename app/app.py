@@ -4,9 +4,9 @@ import joblib
 from pathlib import Path
 
 
-# --------------------------------------------------
-# Load Model
-# --------------------------------------------------
+# ==================================================
+# LOAD MODEL
+# ==================================================
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -15,53 +15,66 @@ MODEL_PATH = BASE_DIR / "models" / "random_forest_model.pkl"
 model = joblib.load(MODEL_PATH)
 
 
-# --------------------------------------------------
-# Page Configuration
-# --------------------------------------------------
+# ==================================================
+# PAGE CONFIGURATION
+# ==================================================
 
 st.set_page_config(
     page_title="Insurance Premium Predictor",
-    layout="wide"
+    layout="centered"
 )
 
 
-# --------------------------------------------------
-# Application Title
-# --------------------------------------------------
+# ==================================================
+# APPLICATION HEADER
+# ==================================================
 
 st.title("Insurance Premium Predictor")
 
 st.markdown(
-    """
-    ### Machine Learning Based Insurance Cost Estimation
+    "**Machine Learning Based Insurance Cost Estimation**"
+)
 
-    Enter the customer's demographic and health information
-    to estimate the insurance premium using a trained
-    **Random Forest Regression model**.
-    """
+st.caption(
+    "Estimate insurance premiums using demographic and "
+    "health information with a trained Random Forest "
+    "Regression model."
 )
 
 st.divider()
 
-# --------------------------------------------------
-# Customer Inputs
-# --------------------------------------------------
 
-st.header("Customer Information")
+# ==================================================
+# CUSTOMER INFORMATION
+# ==================================================
 
-st.write(
-    "Enter the customer's demographic and health information "
-    "below."
+st.subheader("Customer Information")
+
+st.caption(
+    "Enter the customer's demographic and health information below."
 )
 
-col1, col2 = st.columns(2)
+st.markdown("---")
 
 
-# --------------------------------------------------
-# Column 1
-# --------------------------------------------------
+# ==================================================
+# TWO INPUT COLUMNS
+# ==================================================
+
+col1, col2 = st.columns(2, gap="large")
+
+
+# ==================================================
+# LEFT CARD — PERSONAL INFORMATION
+# ==================================================
 
 with col1:
+
+    st.markdown("### Personal Information")
+
+    st.caption(
+        "Basic demographic information"
+    )
 
     age = st.number_input(
         "Age",
@@ -71,63 +84,63 @@ with col1:
         step=1
     )
 
-    diabetes = st.selectbox(
-        "Diabetes",
-        options=[0, 1],
-        format_func=lambda x: "No" if x == 0 else "Yes"
-    )
-
-    blood_pressure = st.selectbox(
-        "Blood Pressure Problems",
-        options=[0, 1],
-        format_func=lambda x: "No" if x == 0 else "Yes"
-    )
-
-    transplants = st.selectbox(
-        "Any Transplants",
-        options=[0, 1],
-        format_func=lambda x: "No" if x == 0 else "Yes"
-    )
-
-    chronic_disease = st.selectbox(
-        "Any Chronic Diseases",
-        options=[0, 1],
-        format_func=lambda x: "No" if x == 0 else "Yes"
-    )
-
-
-# --------------------------------------------------
-# Column 2
-# --------------------------------------------------
-
-with col2:
-
     height = st.number_input(
         "Height (cm)",
-        min_value=100.0,
-        max_value=220.0,
+        min_value=50.0,
+        max_value=250.0,
         value=170.0,
         step=1.0
     )
 
     weight = st.number_input(
         "Weight (kg)",
-        min_value=30.0,
-        max_value=200.0,
+        min_value=20.0,
+        max_value=250.0,
         value=70.0,
         step=1.0
     )
 
+    diabetes = st.selectbox(
+        "Diabetes",
+        ["No", "Yes"]
+    )
+
+    blood_pressure = st.selectbox(
+        "Blood Pressure Problems",
+        ["No", "Yes"]
+    )
+
+
+# ==================================================
+# RIGHT CARD — HEALTH INFORMATION
+# ==================================================
+
+with col2:
+
+    st.markdown("### Health & Medical History")
+
+    st.caption(
+        "Medical conditions and risk indicators"
+    )
+
+    transplants = st.selectbox(
+        "Any Transplants",
+        ["No", "Yes"]
+    )
+
+    chronic_disease = st.selectbox(
+        "Any Chronic Diseases",
+        ["No", "Yes"]
+    )
+
     allergies = st.selectbox(
         "Known Allergies",
-        options=[0, 1],
-        format_func=lambda x: "No" if x == 0 else "Yes"
+        ["No", "Yes"]
     )
 
     cancer_history = st.selectbox(
         "History of Cancer in Family",
-        options=[0, 1],
-        format_func=lambda x: "No" if x == 0 else "Yes"
+        ["No", "Yes"]
     )
 
     major_surgeries = st.number_input(
@@ -139,148 +152,310 @@ with col2:
     )
 
 
-# --------------------------------------------------
-# BMI Calculation
-# --------------------------------------------------
+# ==================================================
+# BMI CALCULATION
+# ==================================================
 
 height_m = height / 100
 
 bmi = weight / (height_m ** 2)
 
-st.info(f"Calculated BMI: {bmi:.2f}")
+st.info(
+    f"Calculated BMI: **{bmi:.2f}**"
+)
 
 
-# --------------------------------------------------
-# Prepare Model Input
-# --------------------------------------------------
+# ==================================================
+# CONVERT YES / NO TO 1 / 0
+# ==================================================
+
+diabetes_value = 1 if diabetes == "Yes" else 0
+
+blood_pressure_value = (
+    1 if blood_pressure == "Yes" else 0
+)
+
+transplants_value = (
+    1 if transplants == "Yes" else 0
+)
+
+chronic_disease_value = (
+    1 if chronic_disease == "Yes" else 0
+)
+
+allergies_value = (
+    1 if allergies == "Yes" else 0
+)
+
+cancer_history_value = (
+    1 if cancer_history == "Yes" else 0
+)
+
+
+# ==================================================
+# PREPARE MODEL INPUT
+# ==================================================
 
 input_data = pd.DataFrame({
+
     "Age": [age],
-    "Diabetes": [diabetes],
-    "BloodPressureProblems": [blood_pressure],
-    "AnyTransplants": [transplants],
-    "AnyChronicDiseases": [chronic_disease],
+
+    "Diabetes": [diabetes_value],
+
+    "BloodPressureProblems": [
+        blood_pressure_value
+    ],
+
+    "AnyTransplants": [
+        transplants_value
+    ],
+
+    "AnyChronicDiseases": [
+        chronic_disease_value
+    ],
+
     "Height": [height],
+
     "Weight": [weight],
-    "KnownAllergies": [allergies],
-    "HistoryOfCancerInFamily": [cancer_history],
-    "NumberOfMajorSurgeries": [major_surgeries],
+
+    "KnownAllergies": [
+        allergies_value
+    ],
+
+    "HistoryOfCancerInFamily": [
+        cancer_history_value
+    ],
+
+    "NumberOfMajorSurgeries": [
+        major_surgeries
+    ],
+
     "BMI": [bmi]
 })
 
 
-# --------------------------------------------------
-# Prediction
-# --------------------------------------------------
+# ==================================================
+# PREDICTION BUTTON
+# ==================================================
 
-if st.button(
+st.markdown("###")
+
+predict_clicked = st.button(
     "Predict Insurance Premium",
     type="primary",
     use_container_width=True
-):
+)
 
-    # -------------------------------
-    # Input Validation
-    # -------------------------------
+
+# ==================================================
+# PREDICTION PROCESS
+# ==================================================
+
+if predict_clicked:
+
+    # --------------------------------------------------
+    # INPUT VALIDATION
+    # --------------------------------------------------
 
     if age < 18 or age > 100:
-        st.error("Please enter an age between 18 and 100.")
+
+        st.error(
+            "Please enter an age between 18 and 100."
+        )
+
         st.stop()
+
 
     if height <= 0:
-        st.error("Height must be greater than zero.")
+
+        st.error(
+            "Height must be greater than zero."
+        )
+
         st.stop()
+
 
     if weight <= 0:
-        st.error("Weight must be greater than zero.")
+
+        st.error(
+            "Weight must be greater than zero."
+        )
+
         st.stop()
+
 
     if major_surgeries < 0 or major_surgeries > 10:
+
         st.error(
-            "Number of major surgeries must be between 0 and 10."
+            "Number of major surgeries must be "
+            "between 0 and 10."
         )
+
         st.stop()
 
-    # -------------------------------
-    # BMI Validation
-    # -------------------------------
+
+    # --------------------------------------------------
+    # BMI VALIDATION
+    # --------------------------------------------------
 
     if bmi <= 0:
+
         st.error(
             "BMI calculation resulted in an invalid value."
         )
+
         st.stop()
 
+
     if bmi < 10 or bmi > 80:
+
         st.warning(
-            "The calculated BMI is outside the expected range. "
-            "Please check the height and weight values."
+            "The calculated BMI is outside the expected "
+            "range. Please check the height and weight values."
         )
 
-    # -------------------------------
-    # Prediction
-    # -------------------------------
+
+    # --------------------------------------------------
+    # MODEL PREDICTION
+    # --------------------------------------------------
 
     prediction = model.predict(input_data)
 
     predicted_premium = prediction[0]
 
-    # -------------------------------
-    # Prediction Result
-    # -------------------------------
+
+    # ==================================================
+    # PREDICTION RESULT
+    # ==================================================
 
     st.divider()
 
-    st.subheader("Prediction Result")
-
-    st.metric(
-        label="Estimated Insurance Premium",
-        value=f"{predicted_premium:,.0f}"
+    st.markdown(
+        """
+        <h2 style="text-align: center;">
+            Prediction Result
+        </h2>
+        """,
+        unsafe_allow_html=True
     )
+
+
+    result_col1, result_col2 = st.columns(
+        2,
+        gap="large"
+    )
+
+
+    # --------------------------------------------------
+    # PREMIUM
+    # --------------------------------------------------
+
+    with result_col1:
+
+        st.metric(
+            label="Estimated Insurance Premium",
+            value=f"₹{predicted_premium:,.0f}"
+        )
+
+
+    # --------------------------------------------------
+    # BMI
+    # --------------------------------------------------
+
+    with result_col2:
+
+        st.metric(
+            label="Calculated BMI",
+            value=f"{bmi:.2f}"
+        )
+
+
+    # --------------------------------------------------
+    # EXPLANATION
+    # --------------------------------------------------
 
     st.info(
         "This estimate is generated by the trained "
-        "Random Forest model using the demographic "
-        "and health information provided."
+        "Random Forest model using the demographic and "
+        "health information provided. "
+        "It is for demonstration purposes and should "
+        "not be considered an actual insurance quotation."
     )
+
+
+# ==================================================
+# MODEL INFORMATION
+# ==================================================
 
 st.divider()
 
 st.subheader("Model Information")
 
-model_col1, model_col2, model_col3 = st.columns(3)
+st.caption(
+    "Details of the machine learning model used for prediction."
+)
 
-with model_col1:
-    st.write("**Model**")
-    st.write("Random Forest Regression")
+model_info = {
+    "Model": "Random Forest Regression",
+    "Prediction Target": "PremiumPrice",
+    "Number of Input Features": "11"
+}
 
-with model_col2:
-    st.write("**Target**")
-    st.write("PremiumPrice")
+for label, value in model_info.items():
 
-with model_col3:
-    st.write("**Input Features**")
-    st.write("11")
+    info_col1, info_col2 = st.columns([1, 2])
+
+    with info_col1:
+        st.markdown(f"**{label}**")
+
+    with info_col2:
+        st.write(value)
+
+
+# ==================================================
+# HOW THE PREDICTION WORKS
+# ==================================================
 
 st.divider()
 
-st.subheader("How the Prediction Works")
-
-st.write(
+st.markdown(
     """
-    1. Customer demographic and health information is entered.
-    2. BMI is calculated from height and weight.
-    3. The engineered features are passed to the trained model.
-    4. The Random Forest model estimates the insurance premium.
+    <h2 style="text-align: center;">
+        How the Prediction Works
+    </h2>
+    """,
+    unsafe_allow_html=True
+)
+
+
+st.markdown(
+    """
+    1. **Customer information is entered** using
+       demographic and health inputs.
+
+    2. **BMI is calculated automatically** from
+       height and weight.
+
+    3. The information is converted into the
+       **11 model input features**.
+
+    4. The trained **Random Forest model** predicts
+       the estimated insurance premium.
     """
 )
+
+
+# ==================================================
+# FOOTER
+# ==================================================
 
 st.divider()
 
 st.caption(
-    "Disclaimer: This prediction is for educational and analytical "
-    "purposes only and should not be considered an actual insurance quote."
+    "Insurance Premium Predictor | "
+    "Machine Learning Demonstration"
 )
+
 
 
 

@@ -8,9 +8,6 @@ __pycache__/
 # Jupyter
 .ipynb_checkpoints/
 
-# Models
-models/*.pkl
-
 # Output files
 output/
 
