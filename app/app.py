@@ -455,7 +455,3 @@ st.caption(
     "Insurance Premium Predictor | "
     "Machine Learning Demonstration"
 )
-
-
-
-
