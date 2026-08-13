@@ -59,6 +59,19 @@ https://public.tableau.com/app/profile/saravanakumar.kannan/viz/InsurancePremium
 ## GitHub Repository
 https://github.com/saravanabst/insurance-cost-prediction
 
+## Project Highlights
+
+- Performed end-to-end Exploratory Data Analysis
+- Engineered BMI as a model feature
+- Built a Random Forest Regression model
+- Applied feature importance and permutation importance
+- Evaluated model performance using cross-validation
+- Generated business insights from demographic and health factors
+- Created three interactive Tableau Public dashboards
+- Built a user-friendly Streamlit insurance premium calculator
+- Deployed the application using Streamlit Community Cloud
+- Managed the project using Git and GitHub
+
 ## Business Problem
 Insurance premiums can vary depending on factors such as age, medical conditions, physical characteristics, previous surgeries, and other health-related indicators.
 
