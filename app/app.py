@@ -146,7 +146,7 @@ with col2:
     major_surgeries = st.number_input(
         "Number of Major Surgeries",
         min_value=0,
-        max_value=10,
+        max_value=3,
         value=0,
         step=1
     )
@@ -284,11 +284,11 @@ if predict_clicked:
         st.stop()
 
 
-    if major_surgeries < 0 or major_surgeries > 10:
+    if major_surgeries < 0 or major_surgeries > 3:
 
         st.error(
             "Number of major surgeries must be "
-            "between 0 and 10."
+            "between 0 and 3."
         )
 
         st.stop()
