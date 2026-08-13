@@ -12,10 +12,49 @@ https://premiumcal.streamlit.app/
 ## Project Dashboard
 https://public.tableau.com/app/profile/saravanakumar.kannan/viz/InsurancePremiumPredictionDashboard_17865594658270/Dashboard1
 
-The Tableau workbook contains three interactive dashboards:
-- Dashboard 1 — EDA Overview
-- Dashboard 2 — Health & Risk Analysis
-- Dashboard 3 — EDA Insights
+# Tableau Dashboards
+The project includes three interactive Tableau Public dashboards covering exploratory analysis, health and risk factors, and key analytical insights.
+
+## Dashboard 1 — EDA Overview
+[EDA Overview](tableau/dashboard1_eda_overview.png)
+
+Provides an overview of the dataset and major insurance premium patterns.
+
+Key analysis includes:
+- Premium distribution
+- Age analysis
+- Customer characteristics
+- Premium by age group
+- Key EDA metrics
+
+## Dashboard 2 — Health & Risk Analysis
+
+[Health & Risk Analysis](tableau/dashboard2_health_risk.png)
+
+Focuses on the relationship between health conditions, risk factors, and insurance premiums.
+
+Key analysis includes:
+- Chronic disease impact
+- Health condition comparisons
+- Risk-factor analysis
+- Premium differences across health conditions
+
+## Dashboard 3 — EDA Insights
+
+[EDA Insights](tableau/dashboard3_eda_insights.png)
+
+Provides deeper analytical insights into relationships between customer characteristics and insurance premiums.
+
+Key analysis includes:
+- Correlation analysis
+- BMI versus PremiumPrice
+- Age versus PremiumPrice
+- Health-factor analysis
+- Interactive filters
+- Key analytical observations
+
+### View the Interactive Tableau Dashboard
+https://public.tableau.com/app/profile/saravanakumar.kannan/viz/InsurancePremiumPredictionDashboard_17865594658270/Dashboard1
 
 ## GitHub Repository
 https://github.com/saravanabst/insurance-cost-prediction
