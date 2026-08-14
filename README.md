@@ -12,6 +12,12 @@ https://premiumcal.streamlit.app/
 ## Project Dashboard
 https://public.tableau.com/app/profile/saravanakumar.kannan/viz/InsurancePremiumPredictionDashboard_17865594658270/Dashboard1
 
+## Technical Blog
+https://saravanakumar-data.hashnode.dev/insurance-cost-prediction
+
+## 5-Minute Project Demo
+https://www.loom.com/share/87aaa9dad14940eca93ca8bc8fa296f7
+
 # Tableau Dashboards
 The project includes three interactive Tableau Public dashboards covering exploratory analysis, health and risk factors, and key analytical insights.
 
