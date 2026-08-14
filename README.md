@@ -9,9 +9,6 @@ The project combines exploratory data analysis, feature engineering, machine lea
 ## Live Demo
 https://premiumcal.streamlit.app/
 
-## Project Dashboard
-https://public.tableau.com/app/profile/saravanakumar.kannan/viz/InsurancePremiumPredictionDashboard_17865594658270/Dashboard1
-
 ## Technical Blog
 https://saravanakumar-data.hashnode.dev/insurance-cost-prediction
 
